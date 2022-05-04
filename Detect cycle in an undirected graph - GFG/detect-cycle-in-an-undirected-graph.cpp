@@ -10,9 +10,8 @@ class Solution {
     bool solve(int node , vector<int> &visited , int parent , vector<int> adj[]){
         visited[node] = 1;
         /*
-        2 conditions to check for cycle -->
-        1. the nbr should not be visited
-        2. the nbr should not be the parent of the current node
+         while traversal, the moment you find a visited node which is not the parent,
+         cycle exists.
         */
         for(auto nbr : adj[node]){
             if(!visited[nbr]){
