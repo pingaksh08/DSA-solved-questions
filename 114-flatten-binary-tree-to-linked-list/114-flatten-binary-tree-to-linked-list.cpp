@@ -11,6 +11,15 @@
  */
 class Solution {
 public:
+    /*
+    using recursion-->
+    in this, first tackle the right side
+    then the left side and then simply set the left node to null 
+    and set the right node to the prev node and update the prev node 
+    with the curr node.
+    --> dry run for proper understanding
+    tc -- O(n) sc --> O(n) for skewed tree
+    */
     TreeNode *prev = NULL;
     void flatten(TreeNode* root) {
       if(!root)
