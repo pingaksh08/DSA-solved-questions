@@ -11,34 +11,40 @@
 class Solution {
 public:
     ListNode* reverseKGroup(ListNode* head, int k) {
-        if(head == NULL or k == 1)
+        if(head == NULL or head->next == NULL)
             return head;
         
-        ListNode *dummy = new ListNode(0);
-        dummy->next = head;
-        ListNode *prevptr = dummy, *currptr = dummy , *nextptr = dummy;
-        int n = 0;
+        ListNode *temp = head , *prev = NULL , *curr = head , *nex = NULL;
+        int count = 0, itm = 0;
         
-        while(currptr->next != NULL){
-            n++;
-            currptr = currptr->next;
+        // to check that whether there are last k nodes remaining or not
+        while(temp != NULL){
+            temp = temp->next;
+            itm++;
+            if(itm == k) break;
         }
         
-        while(n >= k){
-            currptr = prevptr->next;
-            nextptr = currptr->next;
-            for(int i=1 ; i<k ; i++){
-                //procedure to reverse a link
-                // the curr will always point to the first node of thr k sized group
-                currptr->next = nextptr->next;
-                nextptr->next = prevptr->next;
-                prevptr->next = nextptr;
-                nextptr = currptr->next;
+        // if there is a group of k, reverse all nodes in it 
+        if(itm == k){
+            while(curr != NULL and count < k){
+                // to reverse a ll
+                nex = curr->next;
+                curr->next = prev;
+                prev = curr;
+                curr = nex;
+                count++;
             }
-            prevptr = currptr;
-            n -= k;
         }
         
-        return dummy->next;
+        // recursive call for next group
+        if(nex != NULL)
+            head->next = reverseKGroup(nex, k);
+        
+        // as after reverse, prev becomes the new head
+        if(itm == k)
+            return prev;
+        
+        else
+            return head;
     }
 };
