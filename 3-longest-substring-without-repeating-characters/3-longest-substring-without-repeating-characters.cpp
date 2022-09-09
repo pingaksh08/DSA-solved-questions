@@ -1,29 +1,33 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        /*
-        -- Sliding Window
-        in map we store the right ptr value(s[right]) to its index,
-        and we update the index with the latest appearance of the
-        s[right] value and we move our left ptr to that index to 
-        reduce the TC. Dry run on paper for better understanding. 
-        */
-       	int i = 0, j = 0;
-		int n = s.length();
-		map<char, int> mp;
-		int ans = 0;
-
-		while(j < n) {
-			mp[s[j]]++;
-			while(mp[s[j]] > 1 and i <= j) {
-				mp[s[i]]--;
-				i++;   
-			}
-
-			ans = max(ans, j-i+1);
-			j++;
-    }
-    
+       int n = s.length();
+       int left=0 , right=0;
+       unordered_map<char, int> freq;
+       int ans = 0; 
+       
+       while(right < n){
+           
+           if(freq[s[right]] == 0){
+               freq[s[right]]++;
+          
+           }
+           else{
+               while(s[left] != s[right]){
+                   freq[s[left]]--;
+                   left++;
+               }
+         
+              left++; 
+           }
+           
+           ans = max(ans, right - left + 1);
+      
+           right++;
+       }
+        
         return ans;
+        
     }
 };
+
